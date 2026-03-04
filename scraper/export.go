@@ -2,6 +2,7 @@ package scraper
 
 import (
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"os"
 )
@@ -32,7 +33,7 @@ func (b *Exporter) ToCSV(books []Book) error {
 		writer.Write([]string{
 			fmt.Sprint(i + 1),
 			book.Title,
-			book.getSlug(),
+			book.Slug(),
 			fmt.Sprint(book.InStock),
 			fmt.Sprint(book.Price),
 		})
@@ -41,6 +42,15 @@ func (b *Exporter) ToCSV(books []Book) error {
 	return nil
 }
 
-func (d *Exporter) ToJSON(books []Book) {
-	//
+func (d *Exporter) ToJSON(books []Book) error {
+	file, err := os.Create(d.OutputDir + "/books.json")
+	if err != nil {
+		return nil
+	}
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	encoder.Encode(books)
+
+	return nil
 }

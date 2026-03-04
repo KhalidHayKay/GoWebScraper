@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"time"
 	"web-scraper/config"
 	"web-scraper/scraper"
 )
@@ -26,6 +25,7 @@ func main() {
 	if err := exporter.ToCSV(books); err != nil {
 		handleError("Unable to export books", err)
 	}
-
-	time.Sleep(200 * time.Millisecond)
+	if err := exporter.ToJSON(books); err != nil {
+		handleError("Unable to export books", err)
+	}
 }
