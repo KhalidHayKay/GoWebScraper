@@ -1,6 +1,7 @@
 package scraper
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -32,7 +33,7 @@ func fetchPage(url string) ([]byte, error) {
 	defer res.Body.Close()
 
 	if res.StatusCode != 200 {
-		fmt.Println("server response not OK!")
+		return nil, errors.New("server response not OK")
 	}
 
 	body, err := io.ReadAll(res.Body)

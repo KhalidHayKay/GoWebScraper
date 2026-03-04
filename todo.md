@@ -1,1 +1,2 @@
-RETRY LOGIC
+Retry Logic
+Rate limiting

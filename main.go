@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
 	"web-scraper/config"
 	"web-scraper/scraper"
 )
@@ -12,7 +13,7 @@ func handleError(message string, err error) {
 }
 
 func main() {
-	defer fmt.Println("End of program.")
+	timeNow := time.Now()
 
 	conf, err := config.Load()
 	if err != nil {
@@ -28,4 +29,6 @@ func main() {
 	if err := exporter.ToJSON(books); err != nil {
 		handleError("Unable to export books", err)
 	}
+
+	fmt.Printf("Program ended after %v", time.Since(timeNow).String())
 }
